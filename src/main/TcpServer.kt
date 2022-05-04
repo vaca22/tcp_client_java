@@ -1,5 +1,6 @@
 package main
 
+import main.TcpServer.socket
 import java.io.IOException
 import java.net.InetAddress
 import java.net.InetSocketAddress
@@ -86,19 +87,30 @@ object TcpServer {
         System.out.println("fuck")
         initUdp()
         Thread{
-            socket= Socket("192.168.6.105",8888);
+            socket= Socket("192.168.6.108",8888);
             startListen()
         }.start()
 
-        while (true) {
-            Thread.sleep(1000)
-            try {
-                send("fuckyou".toByteArray())
-            }catch (e:Exception){
+        val bb=ByteArray(1500) {
+            0.toByte()
+        }
+        Thread{
+            Thread.sleep(5000)
+            while (true) {
+                try {
+                    send(bb)
+                    send(bb)
+                    send(bb)
+                    send(bb)
+                    send(bb)
+                }catch (e:Exception){
+
+                }
 
             }
+        }.start()
 
-        }
+
     }
 
     private fun send(b:ByteArray){
